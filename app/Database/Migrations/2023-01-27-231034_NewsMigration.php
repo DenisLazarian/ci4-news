@@ -28,7 +28,7 @@ class NewsMigration extends Migration
                 'type'                  => 'VARCHAR(255)',
                 'null'                  => false
             ],
-            'data_publicació'   =>[
+            'data_publicacio'   =>[
                 'type'                  => 'DATE',
                 'null'                  => false
             ]
