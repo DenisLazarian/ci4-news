@@ -32,6 +32,7 @@ $routes->setAutoRoute(false);
 $routes->get('/', 'Home::index');
 $routes->post('/create','NewsController::add_article');
 $routes->get('/list', 'NewsController::list');
+$routes->get('/public', 'NewsController::listPublishedNews');
 $routes->post('/edit/(:num)', 'NewsController::edit_new/$1');
 
 

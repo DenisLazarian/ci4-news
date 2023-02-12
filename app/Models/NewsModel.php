@@ -49,7 +49,7 @@ class NewsModel extends Model
         }
 
 
-        return $this->where('url',$slug)->first();
+        return $this->table('wallpaper')->where('url',$slug)->first();
 
         // return $this->where(['slug'=>$slug])->first();
     }
@@ -81,6 +81,10 @@ class NewsModel extends Model
         $builder->where('id',$id);
         
         $builder->update($data);
+    }
+
+    public function getNewsPublished(){
+        return $this->table('wallpaper')-> where("curdate() >= data_publicacio")->orderBy('data_publicacio','DESC')->findAll();
     }
 
 }

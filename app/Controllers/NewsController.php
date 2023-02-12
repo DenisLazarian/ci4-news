@@ -9,7 +9,6 @@ use App\Controllers\DateTime;
 class NewsController extends BaseController
 {
     public function index(){
-
     }
     public function list()
     {
@@ -39,9 +38,9 @@ class NewsController extends BaseController
     
             
         }
-        d($data);
+        // d($data);
 
-        return view("news/list",$data );
+        return view("news/layouts/newssections",$data );
     }
 
 
@@ -64,7 +63,7 @@ class NewsController extends BaseController
         $data['news']['data_publicacio'] = date_format($date, 'd/m/Y H:i');
 
 
-        return view("news/show", $data);
+        return view("news/layouts/newsshow", $data);
         // return view("news/list");
     }
 
@@ -85,8 +84,8 @@ class NewsController extends BaseController
 
     public function add_article(){
 
+        $session = \Config\Services::session();
         
-
         helper('form');
         // Checks whether the form is submitted.
         if (! $this->request->is('post')) {
@@ -100,6 +99,11 @@ class NewsController extends BaseController
             'articleText'  => 'required|max_length[5000]|min_length[10]',
         ])) {
             // The validation fails, so returns the form.
+
+            $error = $this->validator->getErrors();
+            if(isset($error['articleTitle']))$session->setFlashdata('flash-message-validation-1',$error['articleTitle']?$error['articleTitle']: null);
+            if(isset($error['articleText']))$session->setFlashdata('flash-message-validation-2',$error['articleText']?$error['articleText']: null);
+
             return redirect()-> to(base_url('list'));
         }
 
@@ -127,7 +131,8 @@ class NewsController extends BaseController
 
     public function edit_new($id){
 
-        
+        $session = \Config\Services::session();
+
 
         helper('form');
 
@@ -143,13 +148,16 @@ class NewsController extends BaseController
             'editText'  => 'required|max_length[5000]|min_length[10]',
         ])) {
             // The validation fails, so returns the form.
+            $error = $this->validator->getErrors();
+            if(isset($error['editTitle']))$session->setFlashdata('flash-message-validation-1',$error['editTitle']?$error['editTitle']: null);
+            if(isset($error['editText']))$session->setFlashdata('flash-message-validation-2',$error['editText']?$error['editText']: null);
+
             return redirect()-> to(base_url('list'));
         
         }
 
 
         $model = new NewsModel();
-
         
         $slug = str_replace(" ", "_", $_POST['editTitle']);
         $data = [
@@ -167,5 +175,17 @@ class NewsController extends BaseController
         $session->setFlashdata('flash-message','Article editat amb exit');
         
         return redirect()-> to(base_url('list'));
+    }
+
+    public function listPublishedNews(){
+
+        $model = new NewsModel();
+
+        $data['news'] = $model->getNewsPublished();
+        
+        
+        return view("news/layouts/publicsections", $data);
+
+
     }
 }

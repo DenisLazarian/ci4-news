@@ -3,11 +3,17 @@
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+use Condig\database;
 
 class NewsMigration extends Migration
 {
     public function up()
     {
+        // $forge = \Config\Database::forge();
+        // if($forge->createDatabase('news-mini-cms', true)){
+        //     d("Database created");
+        // }
+
         $this -> forge -> addField([
             // Aqui dentro va las columnas de la tabla
             'id'                => [
