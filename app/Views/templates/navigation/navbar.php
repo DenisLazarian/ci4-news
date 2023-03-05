@@ -15,8 +15,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?=base_url("list"); ?>">Gestió de noticies</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?=base_url("listCol"); ?>">Gestió de noticies en columnes</a>
+                    </li>
                     
                 </ul>
+                <!-- <form action="<?=base_url('list'); ?>" method="GET" class="d-flex me-5" role="search">
+                    <input class="form-control me-2" name="buscar" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form> -->
                 <div>
                     <li class="nav-item dropdown list-unstyled">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

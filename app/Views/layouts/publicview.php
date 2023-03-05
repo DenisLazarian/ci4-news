@@ -17,13 +17,14 @@
             
         ?>
         <p>
-
             <a class="link-secondary" href="<?=base_url("show/".$news[$i]["url"]); ?>"><?= $news[$i]['titol']; ?> </a>
         </p>
 
         <?php } ?>
         
     </main>
+
+    
 
     <?= $this->renderSection('footer') ?>
 

@@ -28,7 +28,7 @@ class NewsModel extends Model
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
-
+    
     // Callbacks
     protected $allowCallbacks = true;
     protected $beforeInsert   = [];
@@ -39,21 +39,33 @@ class NewsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
     
-
+    
+    
     public function getNews($slug=false){
         
         if ($slug===false) {
             return $this->table('wallpaper')->orderBy('data_publicacio','DESC')->findAll();
         }
-
-
+        
+        
         return $this->table('wallpaper')->where('url',$slug)->first();
-
+        
         // return $this->where(['slug'=>$slug])->first();
     }
+    public function getNewsSearched( $search = false, $order = false ){
 
+        $default = "data_publicacio";
+
+        
+        return $this->table('wallpaper')-> orderBy($default, "DESC")->findAll();
+    }
+
+    public function getNewsOrderedBySelection($order, $direction){
+        
+        return $this->table('wallpaper')-> orderBy($order, $direction);
+    }
+    
     public function deleteNews($id){
         $db      = \Config\Database::connect();
 
@@ -87,4 +99,6 @@ class NewsModel extends Model
         return $this->table('wallpaper')-> where("curdate() >= data_publicacio")->orderBy('data_publicacio','DESC')->findAll();
     }
 
+
 }
+

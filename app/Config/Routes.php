@@ -33,12 +33,16 @@ $routes->get('/', 'Home::index');
 $routes->post('/create','NewsController::add_article');
 $routes->get('/list', 'NewsController::list');
 $routes->get('/public', 'NewsController::listPublishedNews');
+
+$routes->get('/listCol', 'NewsController::listColumn');
+
 $routes->post('/edit/(:num)', 'NewsController::edit_new/$1');
 
-
+$routes->get('makeTable', 'NewsController::makeTables');
 $routes->get('show/(:any)', 'NewsController::new_view/$1');
 $routes->post('delete/(:num)','NewsController::delete_new/$1');
 
+$routes->get('/search', 'NewsController:: listPageSearch');
 
 
 /*

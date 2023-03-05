@@ -17,7 +17,7 @@
             <div class="m-sm-5">
 
 
-                <h1 class=" mb-5">Gestió de noticias</h1>
+                <h1 class=" mb-5"><?=$title; ?></h1>
                 <!-- <?= session()->getFlashdata('flash-message') ?> -->
                 <!-- <?= session()->getFlashdata('flash-message-validation') ?> -->
 
@@ -36,22 +36,26 @@
                 }
                 ?>
                 
-
+                
                 <div class="text-right">
-
                     <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AddModal"><i class="bi bi-plus-circle"></i> Nou article</a>
                 </div>
                 
+
+
                 <?= $this->renderSection('cards-list') ?>
 
                 <?= $this->renderSection('modal-add-news') ?>
+
+
+
+                <?= $this->renderSection('paginator') ?>
             </div>
         </div>
             
             
             
     </main>
-    
     
     
     
