@@ -18,7 +18,7 @@ class NewsMigration extends Migration
             // Aqui dentro va las columnas de la tabla
             'id'                => [
                 'type'                  => 'INT',
-                'constraint'            => 5,
+                'constraint'            => 11,
                 'unsigned'              => true,
                 'auto_increment'        => true
             ],
@@ -37,9 +37,13 @@ class NewsMigration extends Migration
             'data_publicacio'   =>[
                 'type'                  => 'DATE',
                 'null'                  => false
-            ]
+            ],
+            'author_id' => [
+                'type' => 'INT(11)',
+            ],
         ]);
         $this->forge->addKey('id', true);
+        $this->forge->addForeignKey('author_id','user','id');
         $this->forge->createTable('wallpaper');
     }
 

@@ -14,13 +14,15 @@ class NewsSeeder extends Seeder
 
         $faker = Factory::create("es_ES");
         
-        for ($i = 1; $i < 10; $i++) {
-            $fakeTitle = $faker -> catchPhrase;
+        for ($i = 1; $i <= 10; $i++) {
+            $fakeTitle = $faker -> catchPhrase();
+
             $data = [
                 'titol'             =>$fakeTitle,
                 'text'              =>$faker -> paragraph,
                 'url'               => str_replace(" ","%",$fakeTitle), 
-                'data_publicacio'   =>$faker-> datetime()->format("y-m-d H:m:s")
+                'data_publicacio'   =>$faker-> datetime()->format("y-m-d H:m:s"),
+                'author_id'         => rand(1, 10),
             ];
 
             
@@ -30,7 +32,7 @@ class NewsSeeder extends Seeder
 
     }
 
-    public function drop(){
-        $this->db->table('wallpaper')->delete($data);
-    }
+    // public function drop(){
+    //     $this->db->table('wallpaper')->delete($data);
+    // }
 }

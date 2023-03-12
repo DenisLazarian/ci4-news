@@ -13,14 +13,7 @@ class NewsController extends BaseController
     public function list()
     {
 
-        // per cridar una funció de he creat jo.
-
-        // $config = config(\Config\\Dawsite::class);
-        // $config = config("Config\\Dawsite");
-        // $config = config("Dawsite");
         $config = new \Config\Dawsite();
-
-
 
         $request = \Config\Services::request();
 
@@ -37,7 +30,7 @@ class NewsController extends BaseController
             $search = $request -> getGet('buscar');
             $order  = $request -> getGet('order');
 
-            $data['news']= $model->getNewsSearched($search, $order );
+            $data['news']= $model->getNewsSearched($search, $order);
             
             
         }
@@ -75,7 +68,6 @@ class NewsController extends BaseController
 
         return view("news/newssections",$data );
     }
-
 
 
     public function new_view($slug){
@@ -262,8 +254,6 @@ class NewsController extends BaseController
         if($direction === null)
             $direction = 'asc';
 
-        d($order);
-        d($direction);
         
 
         $data['news'] = $model->getNewsOrderedBySelection($order, $direction);
@@ -310,7 +300,7 @@ class NewsController extends BaseController
             $data['news'][$i]['data_publicacio'] = date_format($date, 'd/m/Y H:i');
             
         }
-        d($data);
+        // d($data);
 
 
         // dd($data);

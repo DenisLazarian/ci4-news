@@ -45,6 +45,9 @@ $routes->post('delete/(:num)','NewsController::delete_new/$1');
 $routes->get('/search', 'NewsController:: listPageSearch');
 
 
+$routes->get('/capcha', 'Home::capchaPrueba');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
