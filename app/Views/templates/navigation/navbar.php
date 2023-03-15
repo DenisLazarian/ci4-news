@@ -30,7 +30,7 @@
                             Perfil
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Iniciar sessió</a></li>
+                            <li><a class="dropdown-item" href="login">Iniciar sessió</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Registrar-se</a></li>
                         </ul>

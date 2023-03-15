@@ -29,6 +29,7 @@ $routes->setAutoRoute(false);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
 $routes->get('/', 'Home::index');
 $routes->post('/create','NewsController::add_article');
 $routes->get('/list', 'NewsController::list');
@@ -46,6 +47,21 @@ $routes->get('/search', 'NewsController:: listPageSearch');
 
 
 $routes->get('/capcha', 'Home::capchaPrueba');
+
+$routes->get('/contact', 'UserController::contact');
+
+$routes->group('admin', ['filter' =>'auth'], function ($routes){
+});
+
+$routes->get('user/private', 'UserController::private_dashboard',['filter' => 'auth']);
+//users
+$routes->get('user/login', 'UserController::login');
+$routes->get('user/logout', 'UserController::login');
+
+$routes->post('user/private', 'UserController::login_post');
+
+$routes->get('user/register', 'UserController::register');
+$routes->post('user/save', 'UserController::registerUserPost');
 
 
 /*
