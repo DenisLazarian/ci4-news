@@ -14,7 +14,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username','name','email','password','id_group'];
+    protected $allowedFields    = ['user'];
 
     // Dates
     protected $useTimestamps = false;
@@ -59,5 +59,53 @@ class UserModel extends Model
     public function getAllUsers() {
         $listUsers = $this->table('user')->findAll();
         return $listUsers;
+    }
+
+    public function getReportersEditorsAndAdmins() {
+
+        $listUsers = $this->table('user')
+        ->select('user.id,username,user.name,email,id_group')
+        ->join('group g','g.id = user.id_group')
+        ->where('g.name','reporter')
+        ->orWhere('g.name','editor')
+        ->orWhere('g.name','admin')
+        ->findAll();
+
+        return $listUsers;
+    }
+
+    public function getUserById($id) {
+        $user = $this->table('user')->where('id',$id)->first();
+        return $user;
+    }
+
+    public function updateUser($id, $data) {
+        // d($id);
+        $user = $this->table('user')->where('id',$id)->first();
+
+        if (!empty($data)) {
+            if(!$data['email']) ($data['email'] = $user['email']);
+            if(!$data['name']) ($data['name'] = $user['name']);
+            if(!$data['id_group']) ($data['id_group'] = $user['id_group']);
+            if(!$data['username']) ($data['username'] = $user['username']);
+            // d($data);
+
+
+            $builder = $this->db->table('user');
+            $builder->where('id',$id);
+            $builder->update($data);
+            
+            // return $builder;
+        } else {
+            d('no hay datos');
+            // handle the case where there is no data to update
+        }
+
+        
+    }
+    public function deleteUser($id) {
+        $builder = $this->db->table('user');
+        $builder->where('id',$id);
+        $builder->delete();
     }
 }

@@ -49,11 +49,13 @@
                 <td><?=$users[$i]['email']; ?></td>
                 <td><?=$users[$i]['group'][0]['name']; ?></td>
                 <td>
-                    <a href="edit/<?=$users[$i]['id']; ?>" class="btn btn-primary">Editar</a>
-                    <a href="delete/<?=$users[$i]['id']; ?>" class="btn btn-danger">Eliminar</a>
+                    <a href="<?=base_url()."user/edit/".$users[$i]['id']; ?>" class="btn btn-primary" >Editar</a>
+                    <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delModId<?=$i; ?>">Eliminar</a>
                 </td>
 
             </tr>
+
+
             
             
             <?php } ?>
@@ -62,6 +64,32 @@
 
 
     </table>
+    
+    <?php for($i = 0; $i< count($users) ; $i++){ ?>
+
+        <div class="modal fade" id="delModId<?=$i; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Estas segur de que vols borrar l'usuari <strong><?=$users[$i]['username']; ?></strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="<?=base_url()."user/delete/".$users[$i]['id']; ?>" method="post">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn btn-danger">Borrar</button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+
 
 <?= $this->endSection() ?>
 

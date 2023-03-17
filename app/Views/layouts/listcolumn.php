@@ -15,7 +15,7 @@
     <main class="m-sm-5">
         <div class="m-sm-5">
             <div class="m-sm-5">
-                <p><?=$controller; ?></p>
+                <!-- <p><?=$controller; ?></p> -->
                 <?= $this->renderSection($controller) ?>
             </div>
         </div>

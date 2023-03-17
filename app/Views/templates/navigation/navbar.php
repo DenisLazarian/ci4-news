@@ -29,6 +29,8 @@
     
                         </ul>
                     </div> -->
+                    <?php if(isset($_SESSION['group']) && ($_SESSION['group']=='admin'?? $_SESSION['group']=='editor' ?? $_SESSION['group']=='reporter')){ ?>
+                    
                     <div class="dropdown nav-item">
                         <a class="btn btn-light dropdown-toggle mt-1" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Gestió de noticies
@@ -38,6 +40,10 @@
                             <li><a class="dropdown-item" href="<?=base_url("listCol"); ?>">Gestió versió en columnes</a></li>
                         </ul>
                     </div>
+
+                    <?php } ?>
+                    
+                    <?php if(isset($_SESSION['group']) && ($_SESSION['group']=='admin'?? $_SESSION['group']=='editor')){ ?>
                     
                     <div class="dropdown nav-item">
                         <a class="btn btn-light dropdown-toggle mt-1" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -48,13 +54,14 @@
                             <!-- <li><a class="dropdown-item" href="<?=base_url("listCol"); ?>">Gestió versió en columnes</a></li> -->
                         </ul>
                     </div>
+                    <?php } ?>
                     
                 </ul>
                 <!-- <form action="<?=base_url('list'); ?>" method="GET" class="d-flex me-5" role="search">
                     <input class="form-control me-2" name="buscar" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form> -->
-                <div class="me-5 bg bg-light pt-100 ps-2  border-secondary border-start border-end pe-2">
+                <div class="me-5 bg bg-light pt-100 ps-2  border-secondary border-start border-end pe-2 ">
                     <div class="d-flex gap-2 ">
                         <div class="">
                             <?=$_SESSION['captcha'] ?? '<i class="bi bi-person-circle"></i>'; ?>
@@ -66,36 +73,29 @@
                         </div>
                     </div>
                 </div>
-
-                
-                
-                
+                    
                 <div>
-                    <li class="nav-item dropdown list-unstyled">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item dropdown list-unstyled  ">
+                        <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Perfil
                         </a>
                         <ul class="dropdown-menu">
-
-                            <li>
-                                    
-                                <?= !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="user/login">Iniciar sessió</a>') : '<a class="dropdown-item" href="user/change-pass">Canviar contraseña</a>' ?>
-
+                            <li>  
+                                <?= !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="'.base_url().'user/login'.'">Iniciar sessió</a>') : '<a class="dropdown-item" href="'.base_url().'user/change-pass'.'">Canviar contraseña</a>' ?>
                             </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <?=
-                                    !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="user/register">Registrar-se</a>') : '<a class="dropdown-item" href="user/logout">Tancar sessió</a>'
+                                    !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="'.base_url().'user/register'.'">Registrar-se</a>') : '<a class="dropdown-item" href="'.base_url().'user/logout'.'">Tancar sessió</a>'
                                 ?>
-                            
-                                
-                                
-                            
                             </li>
                         </ul>
                     </li>
-
                 </div>
+                
+                
+                
+                
             </div>
         </div>
     </nav>

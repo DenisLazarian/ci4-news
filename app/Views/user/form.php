@@ -93,6 +93,12 @@
                 <div class="d-grid">
                     <input style="height:40px" class="mt-5 btn btn-danger text-center" type="submit" name="enviar-formulario" id="submit-form" value ="Enviar">
                 </div>
+                <div class="mt-2">
+                    <label >No dispone de cuenta? registrate </label>
+                    <span >
+                        <a  href="<?=base_url()."user\\register"; ?>" class="mt-2">aqui</a>.
+                    </span> 
+                </div>
             </form>
             <!-- <frame> -->
                 
@@ -161,10 +167,94 @@
                 <div class="d-grid">
                     <input style="height:40px" class="mt-5 btn btn-danger text-center" type="submit" name="enviar-formulario" id="submit-form" value ="Enviar">
                 </div>
+                <div class="mt-2">
+                    <label for="linkToLog">Ya dispone de cuenta? inicia sessión </label>
+                    <span id='linkToLog'>
+                        <a  href="login" class="link">aqui</a>.
+                    </span> 
+                </div>
             </form>
 
 <?= $this->endSection() ?>
 
+
+
+<?= $this->section('edit-user') ?> 
+
+            <a href="<?=base_url()."user\\list"; ?>" class="btn btn-secondary"> <i class="bi bi-arrow-left"></i> Tornar</a>
+            <h2 class="mb-4 pt-4">  
+                <?=$title; ?>
+            </h2>
+            <div>
+                <div class="alert alert-info">
+                    <!-- <p> <i class="bi bi-info-circle-fill" aria-hidden="true" alt="Icona d'un signe d'excalamació"></i>  L'asterisc (<span class="text-danger">*</span>) indica els camps obligatoris. </p>      -->
+                    <p> <i class="bi bi-info-circle-fill" aria-hidden="true" alt="Icona d'un signe d'excalamació"></i> En cas que es deixi buit un camp, no es farà cap modificació.</p>
+                </div>
+            </div>
+            
+            <br>
+            <form action="<?=base_url()."user/update/".$user['id']; ?>" method="POST">
+                <?= csrf_field() ?>
+
+                <div>
+                    <label class="form-label fw-bold" for="no-cognom">Usuari:  </label> <span class="text-danger"></span> 
+                    <input class="form-control bg" name="username" id="username" type="text" placeholder="">
+                </div>
+
+                <div class="mt-2">
+                    <label class="form-label fw-bold" for="no-cognom">Nom:  </label> <span class="text-danger"></span> 
+                    <input class="form-control bg" name="name" id="name" type="text" placeholder="">
+
+                    <!-- <?php if(isset($_SESSION['name'])){ ?>
+                    
+                    <div class="alert alert-danger">
+                        <p> <i class="bi bi-info-circle-fill" aria-hidden="true" alt="Icona d'un signe d'excalamació"></i>  <?=$_SESSION['name']; ?> </p>
+                    </div>
+                    <?php } ?> -->
+
+                </div>
+
+                <div class="mt-2">
+                    <label class="form-label fw-bold" for="no-cognom">Email:  </label> <span class="text-danger"></span> 
+                    <input class="form-control bg" name="email" id="email" type="text" placeholder="">
+
+                    <!-- <?php if(isset($_SESSION['error-mail'])){ ?>
+                    
+                    <div class="alert alert-danger">
+                        <p> <i class="bi bi-info-circle-fill" aria-hidden="true" alt="Icona d'un signe d'excalamació"></i>  <?=$_SESSION['error-mail']; ?> </p>
+                    </div>
+                    <?php } ?> -->
+                </div>
+
+                <div>
+                    <label class="form-label fw-bold mt-3 mb-2" for="group">Grupo: </label>
+                    <!-- <input class="form-control" name="group" id="grp" type="text" placeholder=""> -->
+                        <select class="form-select" name="id_group" id="group">
+                        <?php 
+                        for ($i=0; $i < count($groups) ; $i++) { 
+                            if($groups[$i]['id'] == $user['id_group']){
+                                echo "<option value='".$groups[$i]['id']."' selected>".$groups[$i]['name']."</option>";
+                            }else{
+                                echo "<option value='".$groups[$i]['id']."'>".$groups[$i]['name']."</option>";
+                            }
+                        }
+                        ?>
+                        
+                        </select>
+                    <!-- <?php if(isset($_SESSION['error-pass'])){ ?>
+                    
+                    <div class="alert alert-danger">
+                        <p> <i class="bi bi-info-circle-fill" aria-hidden="true" alt="Icona d'un signe d'excalamació"></i>  <?=$_SESSION['error-pass']; ?> </p>
+                    </div>
+                    <?php } ?> -->
+                </div>
+
+                <div class="d-grid">
+                    <input style="height:40px" class="mt-5 btn btn-danger text-center" type="submit" name="enviar-formulario" id="submit-form" value ="Enviar">
+                </div>
+
+            </form>
+<?= $this->endSection() ?>
 
 
 

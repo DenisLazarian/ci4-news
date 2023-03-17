@@ -13,6 +13,10 @@ class NewsSeeder extends Seeder
     {
 
         $faker = Factory::create("es_ES");
+
+        $modelUser = new UserModel();
+
+        $users = $modelUser->getReportersEditorsAndAdmins();
         
         for ($i = 1; $i <= 10; $i++) {
             $fakeTitle = $faker -> catchPhrase();
@@ -22,7 +26,7 @@ class NewsSeeder extends Seeder
                 'text'              =>$faker -> paragraph,
                 'url'               => str_replace(" ","%",$fakeTitle), 
                 'data_publicacio'   =>$faker-> datetime()->format("y-m-d H:m:s"),
-                'author_id'         => rand(1, 10),
+                'author_id'         => rand(1, count($users)),
             ];
 
             

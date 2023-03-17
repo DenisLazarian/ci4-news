@@ -90,7 +90,7 @@ class UserController extends BaseController
                         'name' => $user['name'],
                         'email' => $user['email'],
                         'loggedIn' => true,
-                        'captcha' => '<img class="rounded-circle mt-1" src="data:image/png;base64,' . $timage->toImg64() . '" />',
+                        'captcha' => '<img class="rounded-circle  mt-1" src="data:image/png;base64,' . $timage->toImg64() . '" />',
                         'group' => $group[0]['name'],
                     ];
 
@@ -229,16 +229,55 @@ class UserController extends BaseController
     }
 
     public function edit($id){
+        session()->start();
+
+        $modelUser = new UserModel();
+        $model = new GroupModel();
+
+        $data['controller'] = "edit-user";
+        $data['title'] = "Editar usuari";
+
+        $data['user']= $modelUser->getUserById($id);
+
+        $data['groups'] = $model->getGroups();
+        
+        
+        return view('user/form', $data);
 
     }
 
     public function delete($id){
 
+        session()->start();
+
+        $modelUser = new UserModel();
+
+        if($modelUser->deleteUser($id)){
+            session()->setFlashdata('success', 'Usuari eliminat correctament');
+        }
+
+        return redirect()->to(base_url('user/list'));
     }
 
     public function update($id){
     
     
+    }
+
+
+    public function edit_post($id){
+        session()->start();
+        $request = \Config\Services::request();
+        $modelUser = new UserModel();
+
+        // $data['user'] = $modelUser->getUserById($id);
+        // dd($request->getPost(['email', 'username', 'name', 'id_group']));
+        // $modelUser -> allowEmptyInserts()->;
+        $modelUser->updateUser($id, $request->getPost(['email', 'username', 'name', 'id_group']));
+        
+        return redirect()->to(base_url('user/list'));
+
+        
     }
 
 }

@@ -62,21 +62,31 @@ $routes->get('/capcha', 'Home::capchaPrueba');
 
 $routes->get('/contact', 'UserController::contact');
 
-$routes->group('user', ['filter' =>'auth'], function ($routes){
+$routes->group('user', function ($routes){
+    // $routes->get('user/private', 'UserController::private_dashboard',['filter' => 'auth']);
+    //users
+    $routes->get('login', 'UserController::login');
+    $routes->get('logout', 'UserController::logout');
+    
+    $routes->post('private', 'UserController::login_post');
+    
+    $routes->get('register', 'UserController::register');
+    $routes->post('save', 'UserController::registerUserPost');
+
+    $routes->get('delete/(:any)', 'UserController::delete/$1', ['filter' => 'auth:admin']);
+    $routes->get('edit/(:any)', 'UserController::edit/$1');
+    
+    $routes->group('',['filter'=> 'auth:admin,editor'], function ($routes){
+        $routes->get('list', 'UserController::list');
+        $routes->post('update/(:any)', 'UserController::edit_post/$1');
+        $routes->post('delete/(:any)', 'UserController::delete/$1',['filter' => 'auth:admin']);
+
+    });
+    
+    // $routes->get('list', 'UserController::list',['filter' => 'auth:admin,editor']);
 
 });
 
-// $routes->get('user/private', 'UserController::private_dashboard',['filter' => 'auth']);
-//users
-$routes->get('user/login', 'UserController::login');
-$routes->get('user/logout', 'UserController::logout');
-
-$routes->post('user/private', 'UserController::login_post');
-
-$routes->get('user/register', 'UserController::register');
-$routes->post('user/save', 'UserController::registerUserPost');
-
-$routes->get('user/list', 'UserController::list',['filter' => 'auth:admin,editor']);
 
 
 /*
