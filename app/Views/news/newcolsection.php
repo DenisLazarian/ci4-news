@@ -24,21 +24,93 @@
 
 
 
-<?= $this->section('table-rows-tbody-list') ?> 
+<?= $this->section('table-rows-list') ?> 
 
-    <?php foreach ($news as $new): ?>
-        <tr>
-            <td><?=$new['id']; ?></td>
-            <td><?=$new['titol']; ?></td>
-            <td><?=$new['text']; ?></td>
-            <td><?=$new['data_publicacio']; ?></td>
-            <td><?=$new['state']; ?></td>
-            <td>
-                <a href="<?=base_url('show/'.$new['url']); ?>" class="btn btn-primary"><i class="bi bi-eye"></i></a>
-                <a href="#" id="button-edit-<?=$new['id']; ?>" data-bs-toggle="modal" data-bs-target="#editModalFor<?=($new['id']) ?>" role="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-                <a href="#" id="button-delete-<?=$new['id']; ?>" data-bs-toggle="modal" data-bs-target="#deleteModalFor<?=($new['id']) ?>" role="button" class="btn btn-danger"><i class="bi bi-trash"></i></a>
-            </td>
-        </tr>
+            <h1 class=" mb-5"><?=$title; ?></h1>
+                <!-- <?= session()->getFlashdata('flash-message') ?> -->
+                <!-- <?= session()->getFlashdata('flash-message-validation') ?> -->
+
+                <?php 
+                if(isset($_SESSION['flash-message'])){
+                    echo "<div class='alert alert-primary'><i class='bi bi-check-circle-fill'></i> ".$_SESSION['flash-message']."</div>";
+                }
+                if(isset($_SESSION['flash-message-validation-1']) && isset($_SESSION['flash-message-validation-2'] )){
+
+                    echo "<div class='alert alert-danger'><i class='bi bi-exclamation-triangle-fill' style='display:inline-block'></i> <h4 style='display:inline-block'>Error</h4><br> ".$_SESSION['flash-message-validation-1']."</br>".$_SESSION['flash-message-validation-2']."</div>";
+
+
+                }elseif(isset($_SESSION['flash-message-validation-1']) || isset($_SESSION['flash-message-validation-2'])){
+                    
+                    echo "<div class='alert alert-danger'><i class='bi bi-exclamation-triangle-fill' style='display:inline-block'></i> <h3 style='display:inline-block'>Error</h3><br> ".($_SESSION['flash-message-validation-1']??$_SESSION['flash-message-validation-2'])."</div>";
+                }
+
+                if(isset($_SESSION['error'])){
+                
+                echo "<div class='alert alert-danger'> ".$_SESSION['error'] ."</div>";
+                }
+                ?>
+
+                
+                
+                <div class="text-right">
+                    <a type="button" href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#AddModal"><i class="bi bi-plus-circle"></i> Nou article</a>
+                </div>
+
+               
+                <table class="table table-striped mt-5">
+                    <thead>
+                        <tr><th>  Id                
+                            <?php if ($orderby== 'id' && $direction == 'asc'):  ?>
+                            <a href="<?= base_url('listCol?orderBy=id&direction=desc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-numeric-down"></i></a>
+                            <?php  else: ?>
+                                <a href="<?= base_url('listCol?orderBy=id&direction=asc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-numeric-up"></i></a> 
+                            <?php endif; ?>
+                            </th>
+                            
+                            <th>  Titol             
+                            <?php if ($orderby== 'titol' && $direction == 'asc'):  ?>
+                            <a href="<?= base_url('listCol?orderBy=titol&direction=desc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-alpha-up"></i></a>
+                            <?php  else: ?>
+                                <a href="<?= base_url('listCol?orderBy=titol&direction=asc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-alpha-down"></i></a>
+                            <?php endif; ?>
+                            </th>
+
+                            <th> Contingut          
+                                <?php if ($orderby== 'text' && $direction == 'asc'):  ?>
+                                <a href="<?= base_url('listCol?orderBy=text&direction=desc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-alpha-up"></i></a>
+                                <?php  else: ?>
+                                    <a href="<?= base_url('listCol?orderBy=text&direction=asc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-alpha-down"></i></a>
+                                <?php endif; ?>
+                            
+                            </th>
+                            
+                            <th>Data de publicació  
+                            <?php if ($orderby== 'data_publicacio' && $direction == 'asc'):  ?>
+                            <a href="<?= base_url('listCol?orderBy=data_publicacio&direction=desc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-numeric-down"></i></a>
+                            <?php  else: ?>
+                                <a href="<?= base_url('listCol?orderBy=data_publicacio&direction=asc&page='.$pager->getCurrentPage()); ?>"><i class="bi bi-sort-numeric-up"></i></a> 
+                            <?php endif; ?>
+                            </th>
+                            
+                            <th>Estat de la noticias</th>
+                            <th>Accions</th>
+                        </tr>
+                    </thead>
+
+
+                <?php foreach ($news as $new): ?>
+                    <tr>
+                        <td><?=$new['id']; ?></td>
+                        <td><?=$new['titol']; ?></td>
+                        <td><?=$new['text']; ?></td>
+                        <td><?=$new['data_publicacio']; ?></td>
+                        <td><?=$new['state']; ?></td>
+                        <td>
+                            <a href="<?=base_url('show/'.$new['url']); ?>" class="btn btn-primary"><i class="bi bi-eye"></i></a>
+                            <a href="#" id="button-edit-<?=$new['id']; ?>" data-bs-toggle="modal" data-bs-target="#editModalFor<?=($new['id']) ?>" role="button" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
+                            <a href="#" id="button-delete-<?=$new['id']; ?>" data-bs-toggle="modal" data-bs-target="#deleteModalFor<?=($new['id']) ?>" role="button" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                        </td>
+                    </tr>
 
 
 
@@ -130,16 +202,21 @@
 
     <?php endforeach; ?>
 
+    </table>
+                
+                
 
+                <?= $this->renderSection('modal-add-new') ?>
+                
+
+
+                <?= $this->renderSection('paginator') ?>
 
 
 <?= $this->endSection() ?>
 
 
-<?= $this->section('bootstrap-links-CDN') ?> 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-<?= $this->endSection() ?>
+
 
 
 

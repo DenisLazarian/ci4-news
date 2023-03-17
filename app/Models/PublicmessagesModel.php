@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class PublicmessagesModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'user';
+    protected $table            = 'publicmessages';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username','name','email','password','id_group'];
+    protected $allowedFields    = [];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,25 +39,4 @@ class UserModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-
-
-    public function getUserByMailOrUsername($email) {
-        // return $this->where('email',$email)->first();
-        $query = $this->orWhere('email',$email)->orWhere('username',$email)->first();
-        // dd($query);
-        return $query;
-    }
-    
-    public function saveUserRegister($data) {
-        // $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        // dd($data);
-        $this->table('user')->insert($data);
-        // return $this->insertID();
-    }
-
-    public function getAllUsers() {
-        $listUsers = $this->table('user')->findAll();
-        return $listUsers;
-    }
 }

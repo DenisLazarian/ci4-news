@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\GroupModel;
 use App\Models\UserModel;
 
 class UserController extends BaseController
@@ -45,24 +46,58 @@ class UserController extends BaseController
         if ($this->validate($validationRules)) {
 
             $model = new UserModel();
+            $modelGroup = new GroupModel();
 
             $email = $this->request->getPost('username');
             $password = $this->request->getPost('password');
 
             $user = $model->getUserByMailOrUsername($email);
+            $group = $modelGroup -> getGroupByUser($user['id']);
+
 
             if ($user) {
                 if (password_verify($password, $user['password'])) {
-                    d("correct");
+                    
+                    $config = [
+                        "textColor"=>'#fff',
+                        "backColor"=>'#FF1C1C',
+                        // "noiceColor"=>'#162453',
+                        "imgWidth"=>31,
+                        "imgHeight"=>32,
+                        "fontSize"=>10,
+                        // "noiceLines"=>40,
+                        // "noiceDots"=>20,
+                        "length" =>3,
+                        "text"=> strtoupper(substr($user['name'], 0, 1)),
+                        // "expiration"=>5*MINUTE
+                    ];
+                    
+            
+                    $timage = new \App\Libraries\Text2Image($config);
+            
+                    $timage->textToImage()->html();
+            
+                    $timage->toJSON();
+            
+                    $captcha = json_decode($timage->toJSON());
+                    d($captcha);
+                    
+                    
+                    
+                    // d("correct");
                     $sessionData = [
                         'id' => $user['id'],
                         'name' => $user['name'],
                         'email' => $user['email'],
                         'loggedIn' => true,
+                        'captcha' => '<img class="rounded-circle mt-1" src="data:image/png;base64,' . $timage->toImg64() . '" />',
+                        'group' => $group[0]['name'],
                     ];
 
+
+
                     session()->set($sessionData);
-                    return redirect()->to(base_url('user/private'));
+                    return redirect()->to(base_url('public'));
                 } else {
                     session()->setFlashdata('error', 'Failed! incorrect password');
                     return redirect()->to(base_url('user/login'));
@@ -72,7 +107,8 @@ class UserController extends BaseController
             return redirect()->to(base_url('user/login'));
         }
     }
-    public function logout () {
+    public function logout() {
+        // dd("session destruida");
         session()->destroy();
         return redirect()->to(base_url('user/login'));
     }
@@ -86,6 +122,7 @@ class UserController extends BaseController
     }
     public function private_dashboard($type="")
     {
+        d(session()->get('name'));
 
         $data["title"] = "Pagina privada ".$type;
         return view("user/private", $data);
@@ -159,13 +196,49 @@ class UserController extends BaseController
             'username'  => $request->getPost('username'),
             'email'     => $request->getPost('email'),
             'password'  => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            
+            'id_group'  => 2,
         ];
 
         $modelUser->saveUserRegister($data);
 
 
         return redirect()->to('public');
+    }
+
+
+    public function list(){
+
+        session()->start();
+        $model = new UserModel();
+        $modelGroup = new GroupModel();
+
+        $data['controller'] = "list-users";
+
+        $data['title'] = "Gestió d'usuaris";
+
+        $data['users'] = $model->getAllUsers();
+        
+        for($i=0; $i<count($data['users']); $i++){
+            $data['users'][$i]['group'] = $modelGroup->getGroupByUser($data['users'][$i]['id']);
+            
+        }
+        // dd($data['users'][0]['group'][0]['name']);
+        // $data['users']['group']
+
+        return view('user/private', $data);
+    }
+
+    public function edit($id){
+
+    }
+
+    public function delete($id){
+
+    }
+
+    public function update($id){
+    
+    
     }
 
 }

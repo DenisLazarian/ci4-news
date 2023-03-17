@@ -26,13 +26,13 @@ class ValidaUsuarisFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         //@see https://codeigniter.com/user_guide/incoming/filters.html
-
+        // dd($arguments);
         if ($arguments == null) {
             if (!session()->get('loggedIn')) {
                 return redirect()->to(base_url('user/login'));
             }
         } else {
-            if (!in_array(session()->get('name'), $arguments)) {
+            if (!in_array(session()->get('group'), $arguments)) {
                 session()->setFlashdata('error', 'Failed! User access no permited');
                 return redirect()->back();
                 // return redirect()->to(base_url('userdemo/login'));

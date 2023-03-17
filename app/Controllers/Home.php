@@ -49,11 +49,11 @@ class Home extends BaseController
         // phpinfo();
 
 
-        $testGD = get_extension_funcs("gd"); // Grab function list 
-        if (!$testGD){ 
-            echo "GD not even installed."; 
-            exit; 
-        }   
+        // $testGD = get_extension_funcs("gd"); // Grab function list 
+        // if (!$testGD){ 
+        //     echo "GD not even installed."; 
+        //     exit; 
+        // }   
         // echo"<pre>".print_r($testGD,true)."</pre>";
 
         $timage = new \App\Libraries\Text2Image($config);

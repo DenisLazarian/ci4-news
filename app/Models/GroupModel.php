@@ -39,4 +39,28 @@ class GroupModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getGroups() {
+        return $this->table('group')->findAll();
+    }
+
+    public function getGroup($id) {
+        return $this->table('group')->where('id',$id)->first();
+    }
+
+
+    public function getGroupByUser($id) {
+
+        $group = $this->table('group')
+        ->select('group.id, group.name')
+        ->join('user','user.id_group = group.id')
+        ->where('user.id',$id)->findAll();
+
+        // dd($group);
+            
+        return $group;
+    }
+
+
 }

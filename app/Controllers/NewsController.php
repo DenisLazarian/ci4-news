@@ -13,6 +13,8 @@ class NewsController extends BaseController
     public function list()
     {
 
+        session()->start();
+
         $config = new \Config\Dawsite();
 
         $request = \Config\Services::request();
@@ -66,12 +68,18 @@ class NewsController extends BaseController
         }
         // d($data);
 
+        if(session()->getFlashdata('error')){   // alternativa para meter mensajes de erorres cuand hay mas de una peticion.
+            $data['error'] = session()->getFlashdata('error');
+        }
+
+        
+
         return view("news/newssections",$data );
     }
 
 
     public function new_view($slug){
-        
+        session()->start();
         $model = new NewsModel();
 
         $slug = str_replace(" ", "%", $slug);
@@ -222,6 +230,9 @@ class NewsController extends BaseController
     public function listPublishedNews(){
 
         $model = new NewsModel();
+        
+        session()->start();
+
 
         $data['news'] = $model->getNewsPublished();
         
@@ -236,6 +247,7 @@ class NewsController extends BaseController
         // $config = new \Config\Dawsite();
         // $table = new \CodeIgniter\View\Table();
 
+        session()->start();
         
         helper('text');
         $request = \Config\Services::request();
@@ -304,6 +316,7 @@ class NewsController extends BaseController
 
 
         // dd($data);
+        $data['controller'] = 'table-rows-list';
 
 
         return view("news/newcolsection",$data );
