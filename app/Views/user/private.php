@@ -25,8 +25,29 @@
 
 <?= $this->section('list-users') ?>     
 
-    <a href="#" class="btn btn-success" type="button">Añadir usuario</a>
+    <a href="<?=base_url()."user/add"; ?>" class="btn btn-success" type="button">Añadir usuario</a>
 
+    <?php if($_SESSION['add'] ?? false){
+
+        echo "<div class='mt-3 alert alert-info'><i class='bi bi-info-circle'></i> ";
+        echo $_SESSION['add'];
+        echo "</div>";
+
+    } ?>
+    <?php if($_SESSION['updated'] ?? false){
+
+        echo "<div class='mt-3 alert alert-info '><i class='bi bi-info-circle'></i> ";
+        echo $_SESSION['updated'];
+        echo "</div>";
+
+    } ?>
+    <?php if($_SESSION['deleted'] ?? false){
+
+        echo "<div class='mt-3 alert alert-info'> <i class='bi bi-info-circle'></i> ";
+        echo $_SESSION['deleted'];
+        echo "</div>";
+
+    } ?>
 
     <table class="table table-striped mt-5">
         <thead>
@@ -50,7 +71,14 @@
                 <td><?=$users[$i]['group'][0]['name']; ?></td>
                 <td>
                     <a href="<?=base_url()."user/edit/".$users[$i]['id']; ?>" class="btn btn-primary" >Editar</a>
-                    <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delModId<?=$i; ?>">Eliminar</a>
+
+                    <?php 
+                    if(!(session()->get('id') == $users[$i]['id'])){  // un usuari no pot eliminarse a si mateix?>
+                        <a href="#" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delModId<?=$i; ?>">Eliminar</a>
+                    
+                    <?php 
+                    } ?>
+                        
                 </td>
 
             </tr>
@@ -71,7 +99,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Borrar usuari</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -88,6 +116,10 @@
             </div>
         </div>
     <?php } ?>
+
+
+    <?=$pager->simpleLinks('default','daw_template'); ?>
+
 
 
 

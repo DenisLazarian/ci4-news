@@ -11,13 +11,15 @@
 
     <?= $this->renderSection('navigation') ?>
 
+
     <main class="m-sm-5">
         <div class="m-sm-5">
             <div class="m-sm-5">
+
+            <?php if(session()->getFlashdata('error') ?? false){
+                echo "<div class='alert alert-danger'> ".$_SESSION['error'] ."</div>";
+            } ?>
                 <!-- <p><?=$controller; ?></p> -->
-                <?php if(session()->getFlashdata('error') ?? false){
-                    echo "<div class='alert alert-danger'> ".$_SESSION['error'] ."</div>";
-                } ?>
                 <?= $this->renderSection($controller) ?>
             </div>
         </div>

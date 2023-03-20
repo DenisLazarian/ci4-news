@@ -21,6 +21,10 @@
                 <!-- <?= session()->getFlashdata('flash-message') ?> -->
                 <!-- <?= session()->getFlashdata('flash-message-validation') ?> -->
 
+                <?php if(session()->getFlashdata('error') ?? false){
+                    echo "<div class='alert alert-danger'> ".$_SESSION['error'] ."</div>";
+                } ?>
+
                 <?php 
                 if(isset($_SESSION['flash-message'])){
                     echo "<div class='alert alert-primary'><i class='bi bi-check-circle-fill'></i> ".$_SESSION['flash-message']."</div>";

@@ -16,5 +16,9 @@ class GroupSeeder extends Seeder
             ];
             $this->db->table('group')->insert($data);
         }
+
+        
+        
+        
     }
 }

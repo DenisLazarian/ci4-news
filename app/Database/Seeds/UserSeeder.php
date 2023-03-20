@@ -48,13 +48,7 @@ class UserSeeder extends Seeder
                 'password' => password_hash('1234', PASSWORD_DEFAULT),
                 'id_group' => 2,
             ],
-            [
-                'username' => 'reporter2',
-                'name' => $faker -> name(),
-                'email' => $faker->email(),
-                'password' => password_hash('1234', PASSWORD_DEFAULT),
-                'id_group' => 2,
-            ],
+            
 
         ];
 
@@ -64,17 +58,18 @@ class UserSeeder extends Seeder
             $this->db->table('user')->insert($defaultUsers[$i]);
         }
 
-        
+        $groupModel = new \App\Models\GroupModel();
+        $groups = $groupModel->getGroups();
 
-        // for ($i = 0; $i < 10; $i++) {
-        //     $data = [
-        //         'username' => $faker->userName(),
-        //         'name' => $faker->name(),
-        //         'email' => $faker->email(),
-        //         'password' => password_hash('1234', PASSWORD_DEFAULT),
-        //         'id_group' => rand(1, 4),
-        //     ];
-        //     $this->db->table('user')->insert($data);
-        // }
+        for ($i = 0; $i < 10; $i++) {
+            $data = [
+                'username' => $faker->userName(),
+                'name' => $faker->name(),
+                'email' => $faker->email(),
+                'password' => password_hash('1234', PASSWORD_DEFAULT),
+                'id_group' => rand(1, count($groups)),
+            ];
+            $this->db->table('user')->insert($data);
+        }
     }
 }

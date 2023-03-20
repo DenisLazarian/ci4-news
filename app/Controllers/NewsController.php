@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\NewsModel;
 use App\Controllers\DateTime;
+use App\Models\UserModel;
 
 class NewsController extends BaseController
 {
@@ -25,17 +26,17 @@ class NewsController extends BaseController
         
         $data['news'] = $model->getNews();
         
-        if($request -> getGet('buscar')){
+        // if($request -> getGet('buscar')){
 
-            d($request -> getGet('buscar'));
+        //     d($request -> getGet('buscar'));
 
-            $search = $request -> getGet('buscar');
-            $order  = $request -> getGet('order');
+        //     $search = $request -> getGet('buscar');
+        //     $order  = $request -> getGet('order');
 
-            $data['news']= $model->getNewsSearched($search, $order);
+        //     $data['news']= $model->getNewsSearched($search, $order);
             
             
-        }
+        // }
         
         $data =[
             'title' => 'Gestió de noticies paginat',
@@ -267,7 +268,6 @@ class NewsController extends BaseController
             $direction = 'asc';
 
         
-
         $data['news'] = $model->getNewsOrderedBySelection($order, $direction);
         
         // if($request -> getGet('buscar')){
@@ -291,6 +291,7 @@ class NewsController extends BaseController
             'orderby' => $order,
             'direction' => $direction
         ];
+        $userModel = new UserModel();
         
         for ($i=0; $i < count($data['news']); $i++) { // cambiar el format de les dates
             
@@ -310,6 +311,7 @@ class NewsController extends BaseController
             
             // d($date);
             $data['news'][$i]['data_publicacio'] = date_format($date, 'd/m/Y H:i');
+            $data['news'][$i]['autor'] = $userModel -> getAuthorById($i);
             
         }
         // d($data);

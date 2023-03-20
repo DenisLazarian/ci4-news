@@ -13,6 +13,12 @@
 
     <main class="m-5">
     <h1 class="mb-5">Publicaciones</h1>
+
+    <?php if(session()->getFlashdata('error') ?? false){
+        echo "<div class='alert alert-danger'> ".$_SESSION['error'] ."</div>";
+    } ?>
+    
+
     <?php for ($i=0; $i < count($news) ; $i++) { 
             
         ?>

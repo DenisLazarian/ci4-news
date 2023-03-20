@@ -30,7 +30,8 @@ $routes->setAutoRoute(false);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
-$routes->get('/', 'Home::index');
+$routes->get('/home', 'Home::index');
+$routes->get('/', 'NewsController::listPublishedNews');
 
 
 $routes->group('', function ($routes){
@@ -58,13 +59,14 @@ $routes->get('show/(:any)', 'NewsController::new_view/$1');
 // $routes->get('/search', 'NewsController:: listPageSearch');
 
 
-$routes->get('/capcha', 'Home::capchaPrueba');
+// $routes->get('/capcha', 'Home::capchaPrueba');
 
-$routes->get('/contact', 'UserController::contact');
+$routes->get('/contact', 'UserController::contact');  // cualquiera puede enviar mesajes
 
 $routes->group('user', function ($routes){
     // $routes->get('user/private', 'UserController::private_dashboard',['filter' => 'auth']);
     //users
+    $routes->post('message-contact', 'UserController::contact_post');
     $routes->get('login', 'UserController::login');
     $routes->get('logout', 'UserController::logout');
     
@@ -80,12 +82,39 @@ $routes->group('user', function ($routes){
         $routes->get('list', 'UserController::list');
         $routes->post('update/(:any)', 'UserController::edit_post/$1');
         $routes->post('delete/(:any)', 'UserController::delete/$1',['filter' => 'auth:admin']);
+        
+        $routes->get('add', 'UserController::addUser', ['filter' => 'auth:admin']);
+        $routes->post('insert', 'UserController::addUser_post',['filter' => 'auth:admin']);
 
     });
     
     // $routes->get('list', 'UserController::list',['filter' => 'auth:admin,editor']);
 
 });
+
+$routes->group('group', ['filter'=> 'auth:admin'], function ($routes){
+
+    $routes->get('list', 'GroupController::list');
+    $routes->get('add', 'GroupController::add');
+
+    $routes->post('insert', 'GroupController::addGroup_post');
+    $routes->get('edit/(:any)', 'GroupController::edit/$1');
+
+    $routes->post('update/(:any)', 'GroupController::editGroup/$1');
+    $routes->post('delete/(:any)', 'GroupController::delete/$1');
+});
+
+
+// la idea es que solo los usuarios con permiso de lectura puedan ver los mensajes publicos
+
+$routes ->group('message',['filter' => 'allow:read'] , function ($routes){ 
+    $routes->get('list', 'UserController::listPublicMessages');
+    
+
+});
+
+
+
 
 
 

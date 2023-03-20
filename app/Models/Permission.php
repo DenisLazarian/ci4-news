@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PublicmessagesModel extends Model
+class Permission extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'message_contact';
+    protected $table            = 'permission';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['message_contact'];
+    protected $allowedFields    = ["permission"];
 
     // Dates
     protected $useTimestamps = false;
@@ -40,12 +40,15 @@ class PublicmessagesModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getAllByUser($id){
 
-    public function savePublicMessage($data) {
-        $this->db->table('message_contact')->insert($data);
-    }
+        $perms = $this->db->table('permission')
+        ->join('user_permission up', 'up.permission_id = permission.id')
+        ->join('user u ', 'u.id = up.user_id')
+        ->where('u.id', $id)
 
-    public function getPublicMessages() {
-        return $this->db->table('message_contact')->get()->getResultArray();
+        ->get()->getResultArray();
+        // dd($perms);
+        return $perms;
     }
 }

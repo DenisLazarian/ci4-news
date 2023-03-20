@@ -34,7 +34,7 @@ class UserMigration extends Migration
                 'id_group' => [
                         'type'           => 'INT',
                         'constraint'     => 11,
-                        'unsigned'       => true,
+                        // 'unsigned'       => true,
                 ],
                 'created_at' => [
                         'type'           => 'DATETIME',

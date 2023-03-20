@@ -41,6 +41,8 @@
                         </ul>
                     </div>
 
+
+
                     <?php } ?>
                     
                     <?php if(isset($_SESSION['group']) && ($_SESSION['group']=='admin'?? $_SESSION['group']=='editor')){ ?>
@@ -51,11 +53,29 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?=base_url("user/list"); ?>">Gestió usuaris</a></li>
+                            <li><a class="dropdown-item" href="<?=base_url("group/list"); ?>">Gestió grups</a></li>
+                            <?php 
+                            for($i=0; $i<count(session()->get('permission')); $i++){
+                                
+                            if(session()->get('permission')[$i]['action'] == 'read'){ ?>
+
+                             <li><a class="dropdown-item" href="<?=base_url("message/list"); ?>">Missatges publics</a></li>
+                             
+                            <?php }
+                            }
+                            ?>
+                            
+                            
+
+                            <li><a class="dropdown-item disabled" href="<?=base_url("group/list"); ?>">Gestió permissos (Proximament)</a></li>
                             <!-- <li><a class="dropdown-item" href="<?=base_url("listCol"); ?>">Gestió versió en columnes</a></li> -->
                         </ul>
                     </div>
                     <?php } ?>
-                    
+                    <li class="nav-item ms-1 "><a class="nav-link text-dark"  href="<?=base_url().'contact' ?>
+                    ">Conctacto</a>
+
+                    </li>
                 </ul>
                 <!-- <form action="<?=base_url('list'); ?>" method="GET" class="d-flex me-5" role="search">
                     <input class="form-control me-2" name="buscar" type="search" placeholder="Search" aria-label="Search">
@@ -81,9 +101,11 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>  
-                                <?= !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="'.base_url().'user/login'.'">Iniciar sessió</a>') : '<a class="dropdown-item" href="'.base_url().'user/change-pass'.'">Canviar contraseña</a>' ?>
+                                <?= !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="'.base_url().'user/login'.'">Iniciar sessió</a>') : '' ?>
+                                <!-- '<a class="dropdown-item" href="'.base_url().'user/change-pass'.'">Canviar contraseña</a>' -->
                             </li>
-                            <li><hr class="dropdown-divider"></li>
+                            
+                            <?= ($_SESSION['loggedIn'] ? "": '<li><hr class="dropdown-divider"></li>'); ?>
                             <li>
                                 <?=
                                     !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="'.base_url().'user/register'.'">Registrar-se</a>') : '<a class="dropdown-item" href="'.base_url().'user/logout'.'">Tancar sessió</a>'

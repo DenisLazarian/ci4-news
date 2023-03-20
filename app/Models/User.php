@@ -4,17 +4,17 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PublicmessagesModel extends Model
+class User extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'message_contact';
+    protected $table            = 'users';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['message_contact'];
+    protected $allowedFields    = [];
 
     // Dates
     protected $useTimestamps = false;
@@ -39,13 +39,4 @@ class PublicmessagesModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-
-
-    public function savePublicMessage($data) {
-        $this->db->table('message_contact')->insert($data);
-    }
-
-    public function getPublicMessages() {
-        return $this->db->table('message_contact')->get()->getResultArray();
-    }
 }

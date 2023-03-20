@@ -14,7 +14,7 @@ class GroupModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['name','description'];
 
     // Dates
     protected $useTimestamps = false;
@@ -60,6 +60,28 @@ class GroupModel extends Model
         // dd($group);
             
         return $group;
+    }
+
+    public function updateGroup($id, $data){
+        $group = [
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'id' => $id
+        ];
+        // dd($data);
+        $this->db->table('group')->where('id',$id)->update($group);
+    }
+
+    public function deleteGroup($id){
+        $this->db->table('group')->where('id',$id)->delete();
+    }
+
+    public function addGroup($data){
+        $group = [
+            'name' => $data['name'],
+            'description' => $data['description'],
+        ];
+        $this->db->table('group')->insert($group);
     }
 
 

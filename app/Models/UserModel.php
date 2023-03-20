@@ -52,7 +52,7 @@ class UserModel extends Model
     public function saveUserRegister($data) {
         // $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         // dd($data);
-        $this->table('user')->insert($data);
+        $this->db->table('user')->insert($data);
         // return $this->insertID();
     }
 
@@ -107,5 +107,15 @@ class UserModel extends Model
         $builder = $this->db->table('user');
         $builder->where('id',$id);
         $builder->delete();
+    }
+
+    // public function getUserByName(){
+    //     $listUsers = $this->table('user')->findAll();
+    //     return $listUsers;
+    // }
+
+    public function getAuthorById($id){
+        $author = $this->select('name')->table('user')->where('id',$id)->first();
+        return $author;
     }
 }

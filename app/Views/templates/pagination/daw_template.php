@@ -1,4 +1,4 @@
-<?php $pager->setSurroundCount(2) ?>
+<?php $pager->setSurroundCount(5) ?>
 <!-- <style>
     .dawpageactive {
         font-weight: bolder;
