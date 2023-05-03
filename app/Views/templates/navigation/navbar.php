@@ -105,7 +105,6 @@
                                 <!-- '<a class="dropdown-item" href="'.base_url().'user/change-pass'.'">Canviar contraseña</a>' -->
                             </li>
                             
-                            <?= ($_SESSION['loggedIn'] ? "": '<li><hr class="dropdown-divider"></li>'); ?>
                             <li>
                                 <?=
                                     !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="'.base_url().'user/register'.'">Registrar-se</a>') : '<a class="dropdown-item" href="'.base_url().'user/logout'.'">Tancar sessió</a>'
