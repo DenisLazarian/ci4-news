@@ -164,7 +164,7 @@ class UserController extends BaseController
         $timage->toJSON();
 
         $captcha = json_decode($timage->toJSON());
-        d($captcha);
+        // d($captcha);
 
         $data['captcha'] = '<img class=" mt-1" src="data:image/png;base64,' . $timage->toImg64() . '" />';
         
@@ -329,9 +329,9 @@ class UserController extends BaseController
         $modelUser = new UserModel();
 
         if($modelUser->deleteUser($id)){
-            session()->setFlashdata('success', 'Usuari eliminat correctament');
+            session()->setFlashdata('success', 'Usuari eliminat exitosament.');
         }
-        session()->setFlashdata('deleted', 'Usuari eliminat correctament');
+        session()->setFlashdata('deleted', 'Usuari eliminat exitosament.');
 
         return redirect()->to(base_url('user/list'));
     }
@@ -348,7 +348,7 @@ class UserController extends BaseController
         // $modelUser -> allowEmptyInserts()->;
         $modelUser->updateUser($id, $request->getPost(['email', 'username', 'name', 'id_group']));
         
-        session()->setFlashdata('updated', 'Usuari modificat correctament');
+        session()->setFlashdata('updated', 'Usuari modificat exitosament.');
 
         return redirect()->to(base_url('user/list'));
 
@@ -453,7 +453,7 @@ class UserController extends BaseController
 
         $modelUser->saveUserRegister($data);
 
-        session()->setFlashdata('add', 'Usuari afegit correctament');
+        session()->setFlashdata('add', 'Usuari afegit exitosament.');
 
         return redirect()->to(base_url('user/list'));
 

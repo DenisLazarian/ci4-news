@@ -14,6 +14,6 @@ class Install extends Seeder
         $this->call('PublicmessagesSeeder');
         $this->call('Permission');
         $this->call('GroupPermissionSeeder'); 
-        // $this->call('NewsSeeder');
+        $this->call('NewsSeeder');
     }
 }

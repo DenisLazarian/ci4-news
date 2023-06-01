@@ -6,7 +6,7 @@
 
 
 <?= $this->section('navigation') ?> 
-    `<?=$this->include('Views/templates/navigation/navbar'); ?>
+    <?=$this->include('Views/templates/navigation/navbar'); ?>
 <?= $this->endSection() ?>
 
 
@@ -25,7 +25,7 @@
 
 <?= $this->section('list-users') ?>     
 
-    <a href="<?=base_url()."user/add"; ?>" class="btn btn-success" type="button">Añadir usuario</a>
+    <a href="<?=base_url()."user/add"; ?>" class="btn btn-success" type="button">Afegir usuari</a>
 
     <?php if($_SESSION['add'] ?? false){
 

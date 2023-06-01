@@ -122,7 +122,7 @@
 
             <div>
                 <div class="alert alert-info">
-                    <p> <i class="bi bi-info-circle-fill" aria-hidden="true" alt="Icona d'un signe d'excalamació"></i>  L'asterisco (<span class="text-danger">*</span>) indica els camps obligatoris. </p>     
+                    <p> <i class="bi bi-info-circle-fill" aria-hidden="true" alt="Icona d'un signe d'excalamació"></i>  L'asterisc (<span class="text-danger">*</span>) indica els camps obligatoris. </p>     
                 </div>
             </div>
             
@@ -321,7 +321,6 @@
 
                 <div>
                     <label class="form-label fw-bold mt-3 mb-2" for="group">Grupo: </label> <span class="text-danger">*</span>
-                    <!-- <input class="form-control" name="group" id="grp" type="text" placeholder=""> -->
                         <select class="form-select" name="id_group" id="group" title="Selector de grups">
                         <?php 
                         if($controller == 'add-user'){

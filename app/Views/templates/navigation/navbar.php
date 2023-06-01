@@ -49,38 +49,29 @@
                     
                     <div class="dropdown nav-item">
                         <a class="btn btn-light dropdown-toggle mt-1" href="#" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Gestió administratives
+                            Gestió administrativa
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?=base_url("user/list"); ?>">Gestió usuaris</a></li>
-                            <li><a class="dropdown-item" href="<?=base_url("group/list"); ?>">Gestió grups</a></li>
                             <?php 
                             for($i=0; $i<count(session()->get('permission')); $i++){
                                 
                             if(session()->get('permission')[$i]['action'] == 'read'){ ?>
 
-                             <li><a class="dropdown-item" href="<?=base_url("message/list"); ?>">Missatges publics</a></li>
+                                <li><a class="dropdown-item" href="<?=base_url("message/list"); ?>">Missatges publics</a></li>
                              
                             <?php }
                             }
                             ?>
-                            
-                            
-
-                            <li><a class="dropdown-item disabled" href="<?=base_url("group/list"); ?>">Gestió permissos (Proximament)</a></li>
-                            <!-- <li><a class="dropdown-item" href="<?=base_url("listCol"); ?>">Gestió versió en columnes</a></li> -->
                         </ul>
                     </div>
                     <?php } ?>
                     <li class="nav-item ms-1 "><a class="nav-link text-dark"  href="<?=base_url().'contact' ?>
-                    ">Conctacto</a>
+                    ">Conctacte</a>
 
                     </li>
                 </ul>
-                <!-- <form action="<?=base_url('list'); ?>" method="GET" class="d-flex me-5" role="search">
-                    <input class="form-control me-2" name="buscar" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form> -->
+                
                 <div class="me-5 bg bg-light pt-100 ps-2  border-secondary border-start border-end pe-2 ">
                     <div class="d-flex gap-2 ">
                         <div class="">
@@ -102,7 +93,6 @@
                         <ul class="dropdown-menu">
                             <li>  
                                 <?= !isset($_SESSION['loggedIn']) ?('<a class="dropdown-item" href="'.base_url().'user/login'.'">Iniciar sessió</a>') : '' ?>
-                                <!-- '<a class="dropdown-item" href="'.base_url().'user/change-pass'.'">Canviar contraseña</a>' -->
                             </li>
                             
                             <li>
